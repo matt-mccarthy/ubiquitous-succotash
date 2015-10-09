@@ -5,13 +5,29 @@ public class ReversalTest
 {
 
 	@Test
-	public void test()
+	public void testReverseLineEmpty()
 	{
-		String out = Reversal.reverseLine("Yo momma's so fat");
+		String actual = Reversal.reverseLine("");
+		String expected = "";
 		
-		System.out.println(out);
-		
-		fail();
+		assertEquals(actual, expected);
 	}
-
+	
+	@Test
+	public void testReverseLineSingleton()
+	{
+		String actual = Reversal.reverseLine("Hello");
+		String expected = "Hello";
+		
+		assertEquals(actual, expected);
+	}
+	
+	@Test
+	public void testReverseLineLong()
+	{
+		String actual = Reversal.reverseLine("Hello I am Matt");
+		String expected = "Matt am I Hello";
+		
+		assertEquals(actual, expected);
+	}
 }

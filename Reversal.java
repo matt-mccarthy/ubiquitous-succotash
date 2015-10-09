@@ -29,10 +29,12 @@ public class Reversal
 		
 		// Empty the stack
 		if (!reversedLine.isEmpty())
+		{
 			output = reversedLine.pop();
 			
-		while (!reversedLine.isEmpty())
-			output += " " + reversedLine.pop();
+			while (!reversedLine.isEmpty())
+				output += " " + reversedLine.pop();
+		}
 		
 		return output;
 	}
