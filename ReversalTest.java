@@ -2,6 +2,8 @@ import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -16,7 +18,10 @@ public class ReversalTest
 	{
 		file = new File(fName);
 		try {
-			if (! file.createNewFile());
+			if (! file.createNewFile())
+			{
+				//Files.delete(Path( fName));
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
