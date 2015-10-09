@@ -4,6 +4,6 @@ public class Reversal
 {
 	public static void reverseFile(File input, File output)
 	{
-		
+		System.exit(0);
 	}
 }
