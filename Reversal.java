@@ -9,6 +9,10 @@ public class Reversal
 	public static void reverseFile(File input, File output) 
 			throws FileNotFoundException
 	{
+		if (!input.exists() || !output.exists())
+			throw new FileNotFoundException();
+		
+		Scanner readFile = new Scanner(input);
 		Stack< Stack<String> > outputMatrix = new Stack< Stack<String> >();
 	}
 	
