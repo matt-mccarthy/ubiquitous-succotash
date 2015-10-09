@@ -1,9 +1,6 @@
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.io.StringReader;
-import java.nio.charset.Charset;
 import java.util.Scanner;
 import java.util.Stack;
 
@@ -15,23 +12,28 @@ public class Reversal
 		Stack< Stack<String> > outputMatrix = new Stack< Stack<String> >();
 	}
 	
-	public static Stack<String> reverseLine(String in)
+	public static String reverseLine(String in)
 	{
-		Stack<String> reversedLine = new Stack<String>();
+		// Initialize
+		Stack<String>	reversedLine	= new Stack<String>();
+		StringReader	stringStream	= new StringReader(in);
+		Scanner			readStrings		= new Scanner(stringStream);
 		
-		StringReader stringStream = new StringReader(in);
+		String			output			= new String("");
 		
-		Scanner readStrings = new Scanner(stringStream);
-		
+		// Push strings into the stack
 		while (readStrings.hasNext())
-		{
-			String next = readStrings.next();
-			System.out.println(next);
-			reversedLine.push(next);
-		}
+			reversedLine.push(readStrings.next());
 		
 		readStrings.close();
 		
-		return reversedLine;
+		// Empty the stack
+		if (!reversedLine.isEmpty())
+			output = reversedLine.pop();
+			
+		while (!reversedLine.isEmpty())
+			output += " " + reversedLine.pop();
+		
+		return output;
 	}
 }
