@@ -13,7 +13,15 @@ public class Reversal
 			throw new FileNotFoundException();
 		
 		Scanner readFile = new Scanner(input);
-		Stack< Stack<String> > outputMatrix = new Stack< Stack<String> >();
+		Stack<String> outputMatrix = new Stack<String>();
+		
+		while (readFile.hasNextLine())
+			outputMatrix.push(reverseLine(readFile.nextLine()));
+		
+		readFile.close();
+		
+		while (!outputMatrix.isEmpty())
+			System.out.println(outputMatrix.pop());
 	}
 	
 	public static String reverseLine(String in)
