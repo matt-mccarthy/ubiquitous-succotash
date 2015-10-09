@@ -19,8 +19,7 @@ public class Reversal
 	{
 		Stack<String> reversedLine = new Stack<String>();
 		
-		InputStream stringStream = new ByteArrayInputStream( 
-				in.getBytes(Charset.forName("UTF-8")) );
+		StringReader stringStream = new StringReader(in);
 		
 		Scanner readStrings = new Scanner(stringStream);
 		
