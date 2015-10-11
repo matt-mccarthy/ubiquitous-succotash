@@ -23,6 +23,8 @@ public class ReversalTest
 	private static File outFile;
 	private static File nonexistant = new File("im_not_here");
 
+	// If temporary I/O files are still there for some reason, delete them
+	// Initializes the File objects
 	@BeforeClass
 	public static void ensureNotThere()
 	{
@@ -46,7 +48,8 @@ public class ReversalTest
 			e.printStackTrace();
 		}
 	}
-
+	
+	// Create temporary I/O files before each test
 	@Before
 	public void createFiles()
 	{
@@ -60,7 +63,8 @@ public class ReversalTest
 			e.printStackTrace();
 		}
 	}
-
+	
+	// Get rid of temporary I/O files after each test
 	@After
 	public void deleteFiles()
 	{
@@ -255,6 +259,26 @@ public class ReversalTest
 		}
 	}
 	
+	@Test
+	public void testReverseFileEmptyFile()
+	{
+		try
+		{		
+			Reversal.reverseFile(inFile, outFile);
+			
+			String actual	= fileToString();
+			String expected	= "";
+			
+			assertEquals(actual, expected);
+		} 
+		catch (FileNotFoundException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	// Takes all of outFile's contents and puts it in a string
 	public String fileToString()
 	{
 		String fOutput = "";

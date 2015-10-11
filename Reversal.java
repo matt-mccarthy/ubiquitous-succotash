@@ -14,17 +14,19 @@ public class Reversal
 		if ( !(input.exists() && output.exists()) )
 			throw new FileNotFoundException();
 		
-		Scanner readFile = new Scanner(input);
-		PrintWriter writeFile = new PrintWriter(output);
-		Stack<String> outputMatrix = new Stack<String>();
+		Scanner			readFile	= new Scanner(input);
+		PrintWriter		writeFile	= new PrintWriter(output);
+		Stack<String>	outputStack	= new Stack<String>();
 		
+		// Read lines from input and reverse them
 		while (readFile.hasNextLine())
-			outputMatrix.push(reverseLine(readFile.nextLine()));
+			outputStack.push(reverseLine(readFile.nextLine()));
 		
 		readFile.close();
 		
-		while (!outputMatrix.isEmpty())
-			writeFile.println(outputMatrix.pop());
+		// Read out the reversed lines in the reversed order
+		while (!outputStack.isEmpty())
+			writeFile.println(outputStack.pop());
 		
 		writeFile.close();
 	}
