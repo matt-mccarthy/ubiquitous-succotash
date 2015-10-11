@@ -15,14 +15,15 @@ import org.junit.Test;
 
 public class ReversalTest
 {
+	private static String 		excptTxt	= "Threw an exception";
 	private static String		inName		= "input";
 	private static String		outName		= "output";
 	private static String		notAName	= "im_not_here";
-	private static Scanner		readFile;
-	private static PrintWriter	writeFile;
 	private static File			inFile;
 	private static File			outFile;
 	private static File			nonexistant;
+	private static Scanner		readFile;
+	private static PrintWriter	writeFile;
 
 	// If temporary I/O files are still there for some reason, delete them
 	// Initializes the File objects
@@ -121,108 +122,116 @@ public class ReversalTest
 	@Test
 	public void testReverseFileNoBlank()
 	{
+		String[] writeMe = {
+				"Hello I am Matt",
+				"Hello I am not Matt",
+				"Goodbye I am indubitably Matt"
+		};
+		
+		stringsToFile(writeMe);
+		
 		try
-		{
-			writeFile = new PrintWriter(inFile);
-			writeFile.println("Hello I am Matt");
-			writeFile.println("Hello I am not Matt");
-			writeFile.println("Goodbye I am indubitably Matt");
-			writeFile.close();
-			
+		{			
 			Reversal.reverseFile(inFile, outFile);
-			
-			String actual	= fileToString();
-			String expected	= "Matt indubitably am I Goodbye\n"
-							+ "Matt not am I Hello\n"
-							+ "Matt am I Hello";
-			
-			assertEquals(actual, expected);
 		} 
 		catch (FileNotFoundException e)
 		{
-			e.printStackTrace();
+			fail(excptTxt);
 		}
+		
+		String actual	= fileToString();
+		String expected	= "Matt indubitably am I Goodbye\n"
+						+ "Matt not am I Hello\n"
+						+ "Matt am I Hello";
+		
+		assertEquals(actual, expected);
 	}
 	
 	@Test
 	public void testReverseFileStartBlank()
 	{
+		String[] writeMe = {
+				"",
+				"Hello I am Matt",
+				"Hello I am not Matt",
+				"Goodbye I am indubitably Matt"
+		};
+		
+		stringsToFile(writeMe);
+		
 		try
-		{
-			writeFile = new PrintWriter(inFile);
-			writeFile.println();
-			writeFile.println("Hello I am Matt");
-			writeFile.println("Hello I am not Matt");
-			writeFile.println("Goodbye I am indubitably Matt");
-			writeFile.close();
-			
+		{		
 			Reversal.reverseFile(inFile, outFile);
-			
-			String actual	= fileToString();
-			String expected	= "Matt indubitably am I Goodbye\n"
-							+ "Matt not am I Hello\n"
-							+ "Matt am I Hello\n";
-			
-			assertEquals(actual, expected);
 		} 
 		catch (FileNotFoundException e)
 		{
-			e.printStackTrace();
+			fail(excptTxt);
 		}
+		
+		String actual	= fileToString();
+		String expected	= "Matt indubitably am I Goodbye\n"
+						+ "Matt not am I Hello\n"
+						+ "Matt am I Hello\n";
+		
+		assertEquals(actual, expected);
 	}
 	
 	@Test
 	public void testReverseFileEndBlank()
 	{
+		String[] writeMe = {
+				"Hello I am Matt",
+				"Hello I am not Matt",
+				"Goodbye I am indubitably Matt",
+				""
+		};
+		
+		stringsToFile(writeMe);
+		
 		try
-		{
-			writeFile = new PrintWriter(inFile);
-			writeFile.println("Hello I am Matt");
-			writeFile.println("Hello I am not Matt");
-			writeFile.println("Goodbye I am indubitably Matt");
-			writeFile.println();
-			writeFile.close();
-			
-			Reversal.reverseFile(inFile, outFile);
-			
-			String actual	= fileToString();
-			String expected	= "\nMatt indubitably am I Goodbye\n"
-							+ "Matt not am I Hello\n"
-							+ "Matt am I Hello";
-			
-			assertEquals(actual, expected);
+		{		
+			Reversal.reverseFile(inFile, outFile);			
 		} 
 		catch (FileNotFoundException e)
 		{
-			e.printStackTrace();
+			fail(excptTxt);
 		}
+		
+		String actual	= fileToString();
+		String expected	= "\nMatt indubitably am I Goodbye\n"
+						+ "Matt not am I Hello\n"
+						+ "Matt am I Hello";
+		
+		assertEquals(actual, expected);
 	}
 	
 	@Test
 	public void testReverseFileMiddleBlank()
 	{
+		String[] writeMe = {
+				"Hello I am Matt",
+				"",
+				"Hello I am not Matt",
+				"Goodbye I am indubitably Matt"
+		};
+		
+		stringsToFile(writeMe);
+		
 		try
 		{
-			writeFile = new PrintWriter(inFile);
-			writeFile.println("Hello I am Matt");
-			writeFile.println();
-			writeFile.println("Hello I am not Matt");
-			writeFile.println("Goodbye I am indubitably Matt");
-			writeFile.close();
-			
 			Reversal.reverseFile(inFile, outFile);
-			
-			String actual	= fileToString();
-			String expected	= "Matt indubitably am I Goodbye\n"
-							+ "Matt not am I Hello\n\n"
-							+ "Matt am I Hello";
-			
-			assertEquals(actual, expected);
 		} 
 		catch (FileNotFoundException e)
 		{
-			e.printStackTrace();
+			fail(excptTxt);
 		}
+		
+		String actual	= fileToString();
+		String expected	= "Matt indubitably am I Goodbye\n"
+						+ "Matt not am I Hello\n\n"
+						+ "Matt am I Hello";
+		
+		assertEquals(actual, expected);
 	}
 	
 	@Test
@@ -231,16 +240,16 @@ public class ReversalTest
 		try
 		{		
 			Reversal.reverseFile(inFile, outFile);
-			
-			String actual	= fileToString();
-			String expected	= "";
-			
-			assertEquals(actual, expected);
 		} 
 		catch (FileNotFoundException e)
 		{
-			e.printStackTrace();
+			fail(excptTxt);
 		}
+		
+		String actual	= fileToString();
+		String expected	= "";
+		
+		assertEquals(actual, expected);
 	}
 	
 	@Test
@@ -277,6 +286,26 @@ public class ReversalTest
 		assertTrue(didThrow);
 	}
 	
+	// Takes an array of Strings and writes each one as a line in inFile
+	public void stringsToFile(String[] in)
+	{
+		try
+		{
+			writeFile = new PrintWriter(inFile);
+			
+			for (String str : in)
+				writeFile.println(str);
+		}
+		catch (FileNotFoundException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			writeFile.close();
+		}
+	}
+	
 	// Takes all of outFile's contents and puts it in a string
 	public String fileToString()
 	{
@@ -293,12 +322,14 @@ public class ReversalTest
 			{
 				fOutput += "\n" + readFile.nextLine();
 			}
-			
-			readFile.close();
 		} 
 		catch (FileNotFoundException e)
 		{
 			e.printStackTrace();
+		}
+		finally
+		{
+			readFile.close();
 		}
 		
 		return fOutput;
