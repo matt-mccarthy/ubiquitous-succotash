@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.io.StringReader;
 import java.util.Scanner;
 import java.util.Stack;
@@ -9,10 +10,12 @@ public class Reversal
 	public static void reverseFile(File input, File output) 
 			throws FileNotFoundException
 	{
-		if (!input.exists() || !output.exists())
+		// Make sure both files exist
+		if ( !(input.exists() && output.exists()) )
 			throw new FileNotFoundException();
 		
 		Scanner readFile = new Scanner(input);
+		PrintWriter writeFile = new PrintWriter(output);
 		Stack<String> outputMatrix = new Stack<String>();
 		
 		while (readFile.hasNextLine())
@@ -21,7 +24,9 @@ public class Reversal
 		readFile.close();
 		
 		while (!outputMatrix.isEmpty())
-			System.out.println(outputMatrix.pop());
+			writeFile.println(outputMatrix.pop());
+		
+		writeFile.close();
 	}
 	
 	public static String reverseLine(String in)
