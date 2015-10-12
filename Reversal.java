@@ -21,6 +21,7 @@ public class Reversal
 		
 		Scanner				readFile	= new Scanner(input);
 		PrintWriter			writeFile	= new PrintWriter(output);
+		
 		Stack<StringBuffer>	outputStack	= new Stack<StringBuffer>();
 		
 		// Read lines from input and reverse them
@@ -43,6 +44,7 @@ public class Reversal
 						}
 					);
 			
+			Thread.yield();
 		}
 		
 		readFile.close();
@@ -58,11 +60,11 @@ public class Reversal
 		writeFile.close();
 	}
 	
-	public static void reverseLine(StringBuffer inBuffer, String inFile)
+	public static void reverseLine(StringBuffer inBuffer, String inStr)
 	{
 		// Initialize
 		Stack<String>	reversedLine	= new Stack<String>();
-		StringReader	stringStream	= new StringReader(inFile);
+		StringReader	stringStream	= new StringReader(inStr);
 		Scanner			readStrings		= new Scanner(stringStream);
 		
 		String			output			= new String("");
