@@ -14,28 +14,34 @@ public class Reversal
 		if ( !(input.exists() && output.exists()) )
 			throw new FileNotFoundException();
 		
-		Scanner			readFile	= new Scanner(input);
-		PrintWriter		writeFile	= new PrintWriter(output);
-		Stack<String>	outputStack	= new Stack<String>();
+		Scanner				readFile	= new Scanner(input);
+		PrintWriter			writeFile	= new PrintWriter(output);
+		Stack<StringBuffer>	outputStack	= new Stack<StringBuffer>();
+		StringBuffer 		strBuff;
 		
 		// Read lines from input and reverse them
 		while (readFile.hasNextLine())
-			outputStack.push(reverseLine(readFile.nextLine()));
+		{
+			strBuff = new StringBuffer();
+			
+			outputStack.push(strBuff);
+			reverseLine(strBuff, readFile.nextLine());
+		}
 		
 		readFile.close();
 		
 		// Read out the reversed lines in the reversed order
 		while (!outputStack.isEmpty())
-			writeFile.println(outputStack.pop());
+			writeFile.println(outputStack.pop().toString());
 		
 		writeFile.close();
 	}
 	
-	public static String reverseLine(String in)
+	public static void reverseLine(StringBuffer inBuffer, String inFile)
 	{
 		// Initialize
 		Stack<String>	reversedLine	= new Stack<String>();
-		StringReader	stringStream	= new StringReader(in);
+		StringReader	stringStream	= new StringReader(inFile);
 		Scanner			readStrings		= new Scanner(stringStream);
 		
 		String			output			= new String("");
@@ -55,6 +61,6 @@ public class Reversal
 				output += " " + reversedLine.pop();
 		}
 		
-		return output;
+		inBuffer.append(output);
 	}
 }
