@@ -95,8 +95,12 @@ public class ReversalTest
 	@Test
 	public void testReverseLineEmpty()
 	{
-		String actual	= Reversal.reverseLine("");
-		String expected	= "";
+		StringBuffer	buff		= new StringBuffer();
+		
+		Reversal.reverseLine(buff, "");
+		
+		String			actual		= buff.toString();
+		String 			expected	= "";
 
 		assertEquals(actual, expected);
 	}
@@ -104,8 +108,12 @@ public class ReversalTest
 	@Test
 	public void testReverseLineSingleton()
 	{
-		String actual	= Reversal.reverseLine("Hello");
-		String expected	= "Hello";
+		StringBuffer	buff		= new StringBuffer();
+		
+		Reversal.reverseLine(buff, "Hello");
+		
+		String			actual		= buff.toString();
+		String 			expected	= "Hello";
 
 		assertEquals(actual, expected);
 	}
@@ -113,8 +121,12 @@ public class ReversalTest
 	@Test
 	public void testReverseLineLong()
 	{
-		String actual	= Reversal.reverseLine("Hello I am Matt");
-		String expected	= "Matt am I Hello";
+		StringBuffer	buff		= new StringBuffer();
+		
+		Reversal.reverseLine(buff, "Hello I am Matt");
+		
+		String			actual		= buff.toString();
+		String 			expected	= "Matt am I Hello";
 
 		assertEquals(actual, expected);
 	}

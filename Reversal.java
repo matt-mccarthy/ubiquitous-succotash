@@ -4,6 +4,8 @@ import java.io.PrintWriter;
 import java.io.StringReader;
 import java.util.Scanner;
 import java.util.Stack;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Reversal
 {	
@@ -14,28 +16,55 @@ public class Reversal
 		if ( !(input.exists() && output.exists()) )
 			throw new FileNotFoundException();
 		
-		Scanner			readFile	= new Scanner(input);
-		PrintWriter		writeFile	= new PrintWriter(output);
-		Stack<String>	outputStack	= new Stack<String>();
+		int					threads		= 7;
+		ExecutorService		tPool		= Executors.newFixedThreadPool(threads);
+		
+		Scanner				readFile	= new Scanner(input);
+		PrintWriter			writeFile	= new PrintWriter(output);
+		
+		Stack<StringBuffer>	outputStack	= new Stack<StringBuffer>();
 		
 		// Read lines from input and reverse them
 		while (readFile.hasNextLine())
-			outputStack.push(reverseLine(readFile.nextLine()));
+		{
+			// Get the next line from the file
+			final StringBuffer	strBuff = new StringBuffer();
+			final String 		curLine	= readFile.nextLine();
+			
+			outputStack.push(strBuff);
+			
+			// Launch a thread to reverse that line
+			tPool.execute(
+						new Thread()
+						{
+							public void run()
+							{
+								reverseLine(strBuff, curLine);
+							}
+						}
+					);
+			
+			Thread.yield();
+		}
 		
 		readFile.close();
 		
+		tPool.shutdown();
+		
+		while(!tPool.isTerminated());
+		
 		// Read out the reversed lines in the reversed order
 		while (!outputStack.isEmpty())
-			writeFile.println(outputStack.pop());
+			writeFile.println(outputStack.pop().toString());
 		
 		writeFile.close();
 	}
 	
-	public static String reverseLine(String in)
+	public static void reverseLine(StringBuffer inBuffer, String inStr)
 	{
 		// Initialize
 		Stack<String>	reversedLine	= new Stack<String>();
-		StringReader	stringStream	= new StringReader(in);
+		StringReader	stringStream	= new StringReader(inStr);
 		Scanner			readStrings		= new Scanner(stringStream);
 		
 		String			output			= new String("");
@@ -55,6 +84,6 @@ public class Reversal
 				output += " " + reversedLine.pop();
 		}
 		
-		return output;
+		inBuffer.append(output);
 	}
 }
