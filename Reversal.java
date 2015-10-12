@@ -9,20 +9,6 @@ import java.util.concurrent.Executors;
 
 public class Reversal
 {	
-	public static void main(String[] args)
-	{
-		try{
-			File input = new File("input");
-			File output = new File("output");
-			
-			reverseFile(input, output);
-		}
-		catch (FileNotFoundException e)
-		{
-			
-		}
-	}
-	
 	public static void reverseFile(File input, File output) 
 			throws FileNotFoundException
 	{
