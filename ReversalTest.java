@@ -316,11 +316,13 @@ public class ReversalTest
 			readFile = new Scanner(outFile);
 			
 			if (readFile.hasNextLine())
+			{
 				fOutput = readFile.nextLine();
 			
-			while (readFile.hasNextLine())
-			{
-				fOutput += "\n" + readFile.nextLine();
+				while (readFile.hasNextLine())
+				{
+					fOutput += "\n" + readFile.nextLine();
+				}
 			}
 		} 
 		catch (FileNotFoundException e)
