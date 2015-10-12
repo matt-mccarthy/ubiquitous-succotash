@@ -4,9 +4,25 @@ import java.io.PrintWriter;
 import java.io.StringReader;
 import java.util.Scanner;
 import java.util.Stack;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Reversal
 {	
+	public static void main(String[] args)
+	{
+		try{
+			File input = new File("input");
+			File output = new File("output");
+			
+			reverseFile(input, output);
+		}
+		catch (FileNotFoundException e)
+		{
+			
+		}
+	}
+	
 	public static void reverseFile(File input, File output) 
 			throws FileNotFoundException
 	{
@@ -14,21 +30,40 @@ public class Reversal
 		if ( !(input.exists() && output.exists()) )
 			throw new FileNotFoundException();
 		
+		int					threads		= 7;
+		ExecutorService		tPool		= Executors.newFixedThreadPool(threads);
+		
 		Scanner				readFile	= new Scanner(input);
 		PrintWriter			writeFile	= new PrintWriter(output);
 		Stack<StringBuffer>	outputStack	= new Stack<StringBuffer>();
-		StringBuffer 		strBuff;
 		
 		// Read lines from input and reverse them
 		while (readFile.hasNextLine())
 		{
-			strBuff = new StringBuffer();
+			// Get the next line from the file
+			final StringBuffer	strBuff = new StringBuffer();
+			final String 		curLine	= readFile.nextLine();
 			
 			outputStack.push(strBuff);
-			reverseLine(strBuff, readFile.nextLine());
+			
+			// Launch a thread to reverse that line
+			tPool.execute(
+						new Thread()
+						{
+							public void run()
+							{
+								reverseLine(strBuff, curLine);
+							}
+						}
+					);
+			
 		}
 		
 		readFile.close();
+		
+		tPool.shutdown();
+		
+		while(!tPool.isTerminated());
 		
 		// Read out the reversed lines in the reversed order
 		while (!outputStack.isEmpty())
