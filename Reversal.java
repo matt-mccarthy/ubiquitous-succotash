@@ -7,8 +7,20 @@ import java.util.Stack;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * Reversal.java
+ * @author Matt McCarthy
+ *
+ */
 public class Reversal
 {	
+	/**
+	 * Reads in an ASCII text file and reverses both the line order and
+	 * each line in the file.
+	 * @param input File containing the input.
+	 * @param output File to which this method will write.
+	 * @throws FileNotFoundException Thrown when a file does not exist.
+	 */
 	public static void reverseFile(File input, File output) 
 			throws FileNotFoundException
 	{
@@ -60,6 +72,11 @@ public class Reversal
 		writeFile.close();
 	}
 	
+	/**
+	 * Reverses an input line.
+	 * @param inBuffer String buffer to which we write our reversed string.
+	 * @param inStr The line to reverse.
+	 */
 	public static void reverseLine(StringBuffer inBuffer, String inStr)
 	{
 		// Initialize
