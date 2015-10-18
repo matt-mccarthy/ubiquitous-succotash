@@ -16,12 +16,12 @@ import org.junit.Test;
 public class ReversalTest
 {
 	private static String 		excptTxt	= "Threw an exception";
-	private static String		inName		= "input";
-	private static String		outName		= "output";
-	private static String		notAName	= "im_not_here";
+	private static String		inName		= "input.matt";
+	private static String		outName		= "output.matt";
+	private static String		notAName	= "im_not_here.matt";
 	private static File			inFile;
 	private static File			outFile;
-	private static File			nonexistant;
+	private static File			nonexistent;
 	private static Scanner		readFile;
 	private static PrintWriter	writeFile;
 
@@ -32,7 +32,7 @@ public class ReversalTest
 	{
 		inFile		= new File(inName);
 		outFile		= new File(outName);
-		nonexistant	= new File(notAName);
+		nonexistent	= new File(notAName);
 		try
 		{
 			if (inFile.exists())
@@ -43,9 +43,9 @@ public class ReversalTest
 			{
 				Files.delete(Paths.get(outName));
 			}
-			if (nonexistant.exists())
+			if (nonexistent.exists())
 			{
-				Files.delete(Paths.get("im_not_here"));
+				Files.delete(Paths.get(notAName));
 			}
 		} 
 		catch (IOException e)
@@ -271,7 +271,7 @@ public class ReversalTest
 		
 		try
 		{
-			Reversal.reverseFile(nonexistant, outFile);
+			Reversal.reverseFile(nonexistent, outFile);
 		}
 		catch (FileNotFoundException e)
 		{
@@ -288,7 +288,7 @@ public class ReversalTest
 		
 		try
 		{
-			Reversal.reverseFile(inFile, nonexistant);
+			Reversal.reverseFile(inFile, nonexistent);
 		}
 		catch (FileNotFoundException e)
 		{
